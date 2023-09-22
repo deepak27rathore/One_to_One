@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "985537172035",
+    "project_id": "onetoone-adb73",
+    "storage_bucket": "onetoone-adb73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985537172035:android:1718c14c5da22216643af6",
+        "android_client_info": {
+          "package_name": "com.example.one_to_one"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtjQ1n6i1hQ9BO-Jj1A5ZTadV80NrJYW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

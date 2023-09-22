@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -66,15 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '985537172035',
     projectId: 'onetoone-adb73',
     storageBucket: 'onetoone-adb73.appspot.com',
+    androidClientId: '985537172035-hmntf1aje5lprf4huhdc9tqvubjqtp6m.apps.googleusercontent.com',
+    iosClientId: '985537172035-v4essmbnipgvbjnno73a1r4vt8kdchv4.apps.googleusercontent.com',
     iosBundleId: 'com.example.oneToOne',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCQDFgoQFZS_wMdVVVITODBC3Yk-6Xt3tg',
-    appId: '1:985537172035:ios:16738adbbcd98e87643af6',
-    messagingSenderId: '985537172035',
-    projectId: 'onetoone-adb73',
-    storageBucket: 'onetoone-adb73.appspot.com',
-    iosBundleId: 'com.example.oneToOne.RunnerTests',
   );
 }

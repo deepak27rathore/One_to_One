@@ -1,11 +1,9 @@
 import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:one_to_one/Screens/Auth/login_screen.dart';
 import 'package:one_to_one/Screens/HomeScreen.dart';
+import 'package:one_to_one/api/apis.dart';
 import 'package:one_to_one/main.dart';
 
 //splash screen
@@ -25,8 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
           const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-      if (FirebaseAuth.instance.currentUser != null) {
-        log('\nUser ${FirebaseAuth.instance.currentUser}');
+      if (APIs.auth.currentUser != null) {
+        log('\nUser ${APIs.auth.currentUser}');
         //naviagte to homescreen
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const HomeScreen()));

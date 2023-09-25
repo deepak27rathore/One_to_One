@@ -4,7 +4,7 @@ class Dialogs {
   static void showSnackbar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
-      backgroundColor: Color(0xFF4E74F9).withOpacity(.8),
+      backgroundColor: const Color(0xFF4E74F9).withOpacity(.8),
       behavior: SnackBarBehavior.floating,
     ));
   }

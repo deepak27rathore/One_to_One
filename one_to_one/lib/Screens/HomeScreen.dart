@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:one_to_one/Screens/profile_screen.dart';
 import 'package:one_to_one/api/apis.dart';
 import 'package:one_to_one/main.dart';
 import 'package:one_to_one/models/chat_user.dart';
@@ -27,7 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
 
           //more features button
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProfileScreen(user: list[0])));
+              },
+              icon: const Icon(Icons.more_vert))
         ],
       ),
       //floating button to add new user button

@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(milliseconds: 1500), () {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
-          const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+          const SystemUiOverlayStyle(systemNavigationBarColor: Colors.white));
       if (APIs.auth.currentUser != null) {
         log('\nUser ${APIs.auth.currentUser}');
         //naviagte to homescreen

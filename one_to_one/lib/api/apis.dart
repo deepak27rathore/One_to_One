@@ -108,4 +108,11 @@ class APIs {
         .doc(user.uid)
         .update({'image': me.image});
   }
+
+  ///*************Chat related APIs*****************/
+
+  //for getting all messages of specific conversation  from firebase database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages() {
+    return firestore.collection('messages').snapshots();
+  }
 }

@@ -1,7 +1,11 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:one_to_one/Screens/Auth/login_screen.dart';
 import 'package:one_to_one/api/apis.dart';
 import 'package:one_to_one/helper/dailogs.dart';
@@ -19,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+  String? _image;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -70,17 +75,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //profile picture
                     Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(mq.height * .1),
-                          child: CachedNetworkImage(
-                            width: mq.height * .2,
-                            height: mq.height * 0.2,
-                            fit: BoxFit.fill,
-                            imageUrl: widget.user.image,
-                            errorWidget: (context, url, error) => CircleAvatar(
-                                child: Icon(CupertinoIcons.person)),
-                          ),
-                        ),
+                        _image != null
+                            //locla image
+                            ? ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(mq.height * .1),
+                                child: Image.file(File(_image!),
+                                    width: mq.height * .2,
+                                    height: mq.height * 0.2,
+                                    fit: BoxFit.cover),
+                              )
+                            //image from server
+                            : ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(mq.height * .1),
+                                child: CachedNetworkImage(
+                                  width: mq.height * .2,
+                                  height: mq.height * 0.2,
+                                  fit: BoxFit.cover,
+                                  imageUrl: widget.user.image,
+                                  errorWidget: (context, url, error) =>
+                                      CircleAvatar(
+                                          child: Icon(CupertinoIcons.person)),
+                                ),
+                              ),
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -205,7 +223,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundColor: Colors.white,
                           shape: const CircleBorder(),
                           fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        //pick an image
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          log('Image Path: ${image.path} -- Mimetype: ${image.mimeType} ');
+                          setState(() {
+                            _image = image.path;
+                          });
+
+                          //for hiding bottom sheet
+                          Navigator.pop(context);
+                        }
+                      },
                       child: Image.asset('images/image.png')),
                   //click from camera button
                   ElevatedButton(
@@ -213,7 +245,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundColor: Colors.white,
                           shape: const CircleBorder(),
                           fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        //pick an image
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.camera);
+                        if (image != null) {
+                          log('Image Path: ${image.path} ');
+                          setState(() {
+                            _image = image.path;
+                          });
+
+                          //for hiding bottom sheet
+                          Navigator.pop(context);
+                        }
+                      },
                       child: Image.asset('images/camera.png'))
                 ],
               )

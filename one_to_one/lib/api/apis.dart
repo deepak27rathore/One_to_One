@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:one_to_one/models/chat_user.dart';
 
 class APIs {
@@ -10,6 +12,9 @@ class APIs {
 
   //for accessing cloud firestore databse
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  //for accessing cloud firestore storage
+  static FirebaseStorage storage = FirebaseStorage.instance;
 
   //for storing self information
   static ChatUser me = ChatUser(
@@ -78,5 +83,29 @@ class APIs {
         .collection('users')
         .doc(user.uid)
         .update({'name': me.name, 'about': me.about});
+  }
+
+  //update profile picture of user
+  static Future<void> updateProfilePicture(File file) async {
+    //getting image file extension
+    final ext = file.path.split('.').last;
+    log('Extension: $ext');
+
+    //storage file ref with path
+    final ref = storage.ref().child('profile_pictures/${user.uid}.$ext');
+
+    //uploading image
+    await ref
+        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
+        .then((p0) {
+      log('Data transferred : ${p0.bytesTransferred / 1000} kb');
+    });
+
+    //updating image in firestore database
+    me.image = await ref.getDownloadURL();
+    await firestore
+        .collection('users')
+        .doc(user.uid)
+        .update({'image': me.image});
   }
 }

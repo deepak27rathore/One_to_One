@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                   )
-                : Text('chat'),
+                : const Text('chat'),
             leading: const Icon(CupertinoIcons.home),
             actions: [
               //search user button
@@ -97,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: const Icon(Icons.more_vert))
             ],
           ),
+
           //floating button to add new user button
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 10),

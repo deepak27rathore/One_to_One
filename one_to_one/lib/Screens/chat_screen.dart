@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:one_to_one/api/apis.dart';
 import 'package:one_to_one/main.dart';
 import 'package:one_to_one/models/chat_user.dart';
+import 'package:one_to_one/models/message.dart';
+import 'package:one_to_one/widgets/message_card.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
@@ -18,6 +20,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  //for storing all messages
+  List<Message> _list = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
           automaticallyImplyLeading: false,
           flexibleSpace: _appBar(),
         ),
-
+        backgroundColor: Color.fromARGB(255, 241, 244, 254),
         //body
         body: Column(
           children: [
@@ -47,17 +51,29 @@ class _ChatScreenState extends State<ChatScreen> {
                       log('Data : ${jsonEncode(data![0].data())}');
                       // _list =
                       //     data?.map((e) => ChatUser.fromJson(e.data())).toList() ??
-                      //         [];
-
-                      final _list = ['hii', 'hello'];
-
+                      //         []
+                      _list.clear();
+                      _list.add(Message(
+                          toId: 'xyz',
+                          msg: 'Hii',
+                          read: '',
+                          sent: '12:00 AM',
+                          type: Type.text,
+                          fromId: APIs.user.uid));
+                      _list.add(Message(
+                          toId: APIs.user.uid,
+                          msg: 'Hello',
+                          read: '',
+                          sent: '12:05 AM',
+                          type: Type.text,
+                          fromId: 'xyz'));
                       if (_list.isNotEmpty) {
                         return ListView.builder(
                             itemCount: _list.length,
                             padding: EdgeInsets.only(top: mq.height * 0.01),
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Text('Message : ${_list[index]}');
+                              return MessageCard(message: _list[index]);
                             });
                       } else {
                         return const Center(
